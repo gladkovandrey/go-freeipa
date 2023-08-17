@@ -178,7 +178,7 @@ func (c *Client) exec(req *request) (io.ReadCloser, error) {
 		res.Body.Close()
 		return nil, fmt.Errorf("unexpected http status code: %v", res.StatusCode)
 	}
-
+	res.Body.Close()
 	return res.Body, nil
 }
 
