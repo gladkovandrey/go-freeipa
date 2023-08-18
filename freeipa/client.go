@@ -178,7 +178,7 @@ func (c *Client) exec(req *request) (io.ReadCloser, error) {
 		res.Body.Close()
 		return nil, fmt.Errorf("unexpected http status code: %v", res.StatusCode)
 	}
-	res.Body.Close()
+	
 	return res.Body, nil
 }
 
@@ -198,10 +198,13 @@ func (c *Client) login() error {
 
 	if res.StatusCode != http.StatusOK {
 		if res.StatusCode == http.StatusUnauthorized {
+			res.Body.Close()
 			return unauthorizedHTTPResponseToFreeipaError(res)
 		}
+		res.Body.Close()
 		return fmt.Errorf("unexpected http status code: %v", res.StatusCode)
 	}
+	res.Body.Close()
 	return nil
 }
 
